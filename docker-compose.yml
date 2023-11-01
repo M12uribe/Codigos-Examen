@@ -1,0 +1,37 @@
+
+version: '3'
+
+services:
+  servicio1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8501:80"
+    volumes:
+      - ./datadrive:/miguel_2672501/datadrive
+    networks:
+      - mynetwork
+    extra_hosts:
+      - "Miguel:192.168.1.8"
+    command: ["nginx", "-g", "daemon off;"]
+
+  servicio2:  # Corrección: Quité el espacio extra al inicio del nombre del servicio
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1214716501
+      MYSQL_DATABASE: Datos
+      MYSQL_USER: miguel
+      MYSQL_PASSWORD: 1214716501
+    ports:
+      - "3336:3306"  # Puertos MySQL estándar
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+
+volumes:
+  db_data:
